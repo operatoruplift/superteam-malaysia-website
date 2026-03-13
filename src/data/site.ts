@@ -33,36 +33,42 @@ export const pillars = [
     description:
       "Mentorship, resources, and technical guidance for developers building on Solana.",
     icon: "code",
+    url: "https://earn.superteam.fun/regions/malaysia/",
   },
   {
     title: "Events & Hackathons",
     description:
       "Regular meetups, builder nights, and hackathon participation across Malaysia.",
     icon: "calendar",
+    url: "https://lu.ma/mysuperteam",
   },
   {
     title: "Grants & Funding",
     description:
       "Access to Solana grants, ecosystem funding, and accelerator programs.",
     icon: "wallet",
+    url: "https://earn.superteam.fun/regions/malaysia/grants/",
   },
   {
     title: "Jobs & Bounties",
     description:
       "Earn opportunities through bounties, freelance gigs, and full-time Web3 roles.",
     icon: "briefcase",
+    url: "https://earn.superteam.fun/regions/malaysia/",
   },
   {
     title: "Education",
     description:
       "Workshops, bootcamps, and learning resources to onboard the next wave of builders.",
     icon: "graduation-cap",
+    url: "https://lu.ma/mysuperteam",
   },
   {
     title: "Ecosystem Access",
     description:
       "Connections to Solana projects, VCs, and the global Superteam network.",
     icon: "globe",
+    url: "https://superteam.fun",
   },
 ];
 
