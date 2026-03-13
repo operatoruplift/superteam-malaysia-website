@@ -36,7 +36,7 @@ export default function Navbar() {
     }
     const el = document.querySelector(href);
     if (el) {
-      const y = el.getBoundingClientRect().top + window.scrollY - 104;
+      const y = el.getBoundingClientRect().top + window.scrollY;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
     setMobileOpen(false);
