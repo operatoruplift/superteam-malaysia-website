@@ -26,6 +26,7 @@ function useSupabaseTable<T>(
 
     async function fetch() {
       try {
+        if (!supabase) { setLoading(false); return; }
         let query = supabase.from(table).select("*");
         if (options?.orderBy) {
           query = query.order(options.orderBy, { ascending: options.ascending ?? true });
