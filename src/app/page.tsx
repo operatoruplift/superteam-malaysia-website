@@ -14,9 +14,9 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <Projects />
       <Mission />
       <Stats />
+      <Projects />
       <Events />
       <Members />
       <GlobalNetwork />
