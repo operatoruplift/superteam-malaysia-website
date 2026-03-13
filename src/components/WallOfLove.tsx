@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { testimonials } from "@/data/site";
+import { useTestimonials, type TestimonialData } from "@/hooks/useSupabaseData";
 import AnimatedSection from "./AnimatedSection";
 
 function TestimonialCard({
   testimonial,
 }: {
-  testimonial: (typeof testimonials)[0];
+  testimonial: TestimonialData;
 }) {
   const handle = testimonial.handle.replace("@", "");
   const profileUrl = testimonial.avatar || `https://unavatar.io/twitter/${handle}`;
@@ -50,7 +50,7 @@ function TestimonialCard({
   );
 }
 
-function AutoScrollTestimonials() {
+function AutoScrollTestimonials({ testimonials }: { testimonials: TestimonialData[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const animRef = useRef<number>(0);
 
@@ -164,6 +164,8 @@ function XFeedEmbed() {
 }
 
 export default function WallOfLove() {
+  const { data: testimonials } = useTestimonials();
+
   return (
     <section className="relative py-28 sm:py-36 overflow-hidden">
       <div className="section-divider mb-28 sm:mb-36" />
@@ -184,7 +186,7 @@ export default function WallOfLove() {
 
       {/* Auto-scrolling testimonials (no drag) */}
       <div className="mb-16">
-        <AutoScrollTestimonials />
+        <AutoScrollTestimonials testimonials={testimonials} />
       </div>
 
       {/* X Feed embed — always dark, independent of site theme */}

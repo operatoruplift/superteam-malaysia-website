@@ -81,6 +81,20 @@ export type Database = {
         Insert: Omit<Database["public"]["Tables"]["site_content"]["Row"], "id" | "updated_at">;
         Update: Partial<Database["public"]["Tables"]["site_content"]["Insert"]>;
       };
+      testimonials: {
+        Row: {
+          id: string;
+          name: string;
+          handle: string;
+          text: string;
+          avatar: string | null;
+          post_url: string;
+          sort_order: number;
+          created_at: string;
+        };
+        Insert: Omit<Database["public"]["Tables"]["testimonials"]["Row"], "id" | "created_at">;
+        Update: Partial<Database["public"]["Tables"]["testimonials"]["Insert"]>;
+      };
     };
   };
 };

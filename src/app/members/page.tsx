@@ -3,12 +3,12 @@
 import { useState, useMemo } from "react";
 import { Search, ArrowUpDown } from "lucide-react";
 import {
-  members,
   type MemberSkill,
   type MemberLane,
   type RarityTier,
   getRarity,
 } from "@/data/site";
+import { useMembers } from "@/hooks/useSupabaseData";
 import AnimatedSection from "@/components/AnimatedSection";
 import MemberCard from "@/components/MemberCard";
 
@@ -37,6 +37,7 @@ const rarityOrder: Record<RarityTier, number> = {
 };
 
 export default function MembersPage() {
+  const { data: members } = useMembers();
   const [search, setSearch] = useState("");
   const [activeSkill, setActiveSkill] = useState<MemberSkill | "All">("All");
   const [activeLane, setActiveLane] = useState<MemberLane | "All">("All");
@@ -73,7 +74,7 @@ export default function MembersPage() {
     });
 
     return result;
-  }, [search, activeSkill, activeLane, activeRarity, sortBy]);
+  }, [members, search, activeSkill, activeLane, activeRarity, sortBy]);
 
   const activeFilterCount = [activeSkill, activeLane, activeRarity].filter(
     (f) => f !== "All"

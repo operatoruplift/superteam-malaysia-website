@@ -8,7 +8,7 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder"
 );
 
-type Tab = "events" | "members" | "partners" | "projects" | "announcements" | "content";
+type Tab = "events" | "members" | "partners" | "projects" | "testimonials" | "announcements" | "content";
 
 // ─── Reusable Form Input ───
 function Field({ label, value, onChange, type = "text", placeholder, options, textarea }: {
@@ -78,7 +78,7 @@ export default function AdminDashboard() {
     );
   }
 
-  const tabs: Tab[] = ["events", "members", "partners", "projects", "announcements", "content"];
+  const tabs: Tab[] = ["events", "members", "partners", "projects", "testimonials", "announcements", "content"];
 
   return (
     <div className="min-h-screen bg-bg pt-28 pb-12">
@@ -111,6 +111,7 @@ export default function AdminDashboard() {
         {tab === "members" && <MembersPanel />}
         {tab === "partners" && <PartnersPanel />}
         {tab === "projects" && <ProjectsPanel />}
+        {tab === "testimonials" && <TestimonialsPanel />}
         {tab === "announcements" && <AnnouncementsPanel />}
         {tab === "content" && <ContentPanel />}
       </div>
@@ -218,7 +219,13 @@ function MembersPanel() {
       name: form.name, role: form.role, company: form.company,
       skills: form.skills ? form.skills.split(",").map((s: string) => s.trim()) : [],
       lane: form.lane, twitter: form.twitter, avatar: form.avatar || null,
+      achievements: form.achievements ? form.achievements.split(",").map((s: string) => s.trim()) : [],
       featured: form.featured === "true",
+      connection_count: parseInt(form.connection_count) || 0,
+      hackathon_wins: parseInt(form.hackathon_wins) || 0,
+      projects_built: parseInt(form.projects_built) || 0,
+      grants_received: parseInt(form.grants_received) || 0,
+      bounties_earned: parseInt(form.bounties_earned) || 0,
     };
     const { error } = await supabase.from("members").upsert(payload, { onConflict: "id" });
     if (error) { alert(error.message); return; }
@@ -235,7 +242,7 @@ function MembersPanel() {
     setRows((prev) => prev.map((m) => (m.id === id ? { ...m, featured: !featured } : m)));
   };
 
-  const empty = { id: "", name: "", role: "", company: "", skills: "", lane: "General Web3", twitter: "", avatar: "", featured: "false" };
+  const empty = { id: "", name: "", role: "", company: "", skills: "", lane: "General Web3", twitter: "", avatar: "", achievements: "", featured: "false", connection_count: "0", hackathon_wins: "0", projects_built: "0", grants_received: "0", bounties_earned: "0" };
 
   if (loading) return <p className="text-text-muted">Loading...</p>;
 
@@ -255,14 +262,20 @@ function MembersPanel() {
             <Field label="Lane" value={editing.lane} onChange={(v) => setEditing({ ...editing, lane: v })}
               options={[
                 { label: "General Web3", value: "General Web3" }, { label: "DeFi", value: "DeFi" },
-                { label: "NFT/Gaming", value: "NFT/Gaming" }, { label: "Infrastructure", value: "Infrastructure" },
-                { label: "Community", value: "Community" },
+                { label: "RWA", value: "RWA" }, { label: "DePIN", value: "DePIN" },
+                { label: "AI", value: "AI" },
               ]} />
-            <Field label="Skills (comma-separated)" value={editing.skills} onChange={(v) => setEditing({ ...editing, skills: v })} placeholder="Rust, React, Solidity..." />
-            <Field label="Twitter Handle" value={editing.twitter} onChange={(v) => setEditing({ ...editing, twitter: v })} placeholder="@handle" />
+            <Field label="Skills (comma-separated)" value={editing.skills} onChange={(v) => setEditing({ ...editing, skills: v })} placeholder="Core Team, Rust, Frontend, Design..." />
+            <Field label="Twitter URL" value={editing.twitter} onChange={(v) => setEditing({ ...editing, twitter: v })} placeholder="https://x.com/handle" />
             <Field label="Avatar URL" value={editing.avatar} onChange={(v) => setEditing({ ...editing, avatar: v })} placeholder="https://..." />
+            <Field label="Achievements (comma-separated)" value={editing.achievements} onChange={(v) => setEditing({ ...editing, achievements: v })} placeholder="Core Team, Hackathon Winner..." />
             <Field label="Featured" value={editing.featured} onChange={(v) => setEditing({ ...editing, featured: v })}
               options={[{ label: "No", value: "false" }, { label: "Yes", value: "true" }]} />
+            <Field label="Connections" value={editing.connection_count} onChange={(v) => setEditing({ ...editing, connection_count: v })} type="number" />
+            <Field label="Hackathon Wins" value={editing.hackathon_wins} onChange={(v) => setEditing({ ...editing, hackathon_wins: v })} type="number" />
+            <Field label="Projects Built" value={editing.projects_built} onChange={(v) => setEditing({ ...editing, projects_built: v })} type="number" />
+            <Field label="Grants Received" value={editing.grants_received} onChange={(v) => setEditing({ ...editing, grants_received: v })} type="number" />
+            <Field label="Bounties Earned" value={editing.bounties_earned} onChange={(v) => setEditing({ ...editing, bounties_earned: v })} type="number" />
           </div>
           <div className="flex gap-2 mt-4">
             <button onClick={() => save(editing)} className="btn-gold px-4 py-2 text-sm">Save</button>
@@ -287,7 +300,12 @@ function MembersPanel() {
               <button onClick={() => setEditing({
                 id: String(m.id), name: String(m.name), role: String(m.role), company: String(m.company),
                 skills: Array.isArray(m.skills) ? m.skills.join(", ") : "", lane: String(m.lane),
-                twitter: String(m.twitter), avatar: String(m.avatar || ""), featured: String(m.featured),
+                twitter: String(m.twitter), avatar: String(m.avatar || ""),
+                achievements: Array.isArray(m.achievements) ? m.achievements.join(", ") : "",
+                featured: String(m.featured),
+                connection_count: String(m.connection_count || 0), hackathon_wins: String(m.hackathon_wins || 0),
+                projects_built: String(m.projects_built || 0), grants_received: String(m.grants_received || 0),
+                bounties_earned: String(m.bounties_earned || 0),
               })} className="text-xs text-gold-light hover:underline">Edit</button>
               <button onClick={() => del(String(m.id))} className="text-xs text-red-400 hover:underline">Delete</button>
             </div>
@@ -456,6 +474,87 @@ function ProjectsPanel() {
                 id: String(r.id), name: String(r.name), url: String(r.url), logo: String(r.logo),
                 category: String(r.category), description: String(r.description),
                 founder: String(r.founder), sort_order: String(r.sort_order),
+              })} className="text-xs text-gold-light hover:underline">Edit</button>
+              <button onClick={() => del(String(r.id))} className="text-xs text-red-400 hover:underline">Delete</button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── Testimonials Panel (full CRUD) ───
+function TestimonialsPanel() {
+  const [rows, setRows] = useState<Record<string, unknown>[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [editing, setEditing] = useState<Record<string, string> | null>(null);
+
+  const fetch_ = useCallback(async () => {
+    setLoading(true);
+    const { data } = await supabase.from("testimonials").select("*").order("sort_order", { ascending: true });
+    setRows((data as Record<string, unknown>[]) || []);
+    setLoading(false);
+  }, []);
+
+  useEffect(() => { fetch_(); }, [fetch_]);
+
+  const save = async (form: Record<string, string>) => {
+    const payload = { name: form.name, handle: form.handle, text: form.text, avatar: form.avatar || null, post_url: form.post_url, sort_order: parseInt(form.sort_order) || 0 };
+    if (form.id) {
+      await supabase.from("testimonials").update(payload).eq("id", form.id);
+    } else {
+      await supabase.from("testimonials").insert(payload);
+    }
+    setEditing(null);
+    fetch_();
+  };
+
+  const del = async (id: string) => {
+    if (confirm("Delete this testimonial?")) { await supabase.from("testimonials").delete().eq("id", id); fetch_(); }
+  };
+
+  const empty = { id: "", name: "", handle: "", text: "", avatar: "", post_url: "", sort_order: "0" };
+
+  if (loading) return <p className="text-text-muted">Loading...</p>;
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-lg font-semibold">Testimonials ({rows.length})</h2>
+        <button onClick={() => setEditing(empty)} className="btn-gold px-4 py-2 text-sm">+ Add Testimonial</button>
+      </div>
+      {editing && (
+        <div className="glass-strong rounded-xl p-6 mb-6">
+          <h3 className="font-semibold mb-4">{editing.id ? "Edit Testimonial" : "New Testimonial"}</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <Field label="Name" value={editing.name} onChange={(v) => setEditing({ ...editing, name: v })} />
+            <Field label="Handle" value={editing.handle} onChange={(v) => setEditing({ ...editing, handle: v })} placeholder="@handle" />
+            <Field label="Post URL" value={editing.post_url} onChange={(v) => setEditing({ ...editing, post_url: v })} placeholder="https://x.com/..." />
+            <Field label="Avatar URL" value={editing.avatar} onChange={(v) => setEditing({ ...editing, avatar: v })} placeholder="https://... (optional)" />
+            <Field label="Sort Order" value={editing.sort_order} onChange={(v) => setEditing({ ...editing, sort_order: v })} type="number" />
+          </div>
+          <div className="mt-3">
+            <Field label="Testimonial Text" value={editing.text} onChange={(v) => setEditing({ ...editing, text: v })} textarea />
+          </div>
+          <div className="flex gap-2 mt-4">
+            <button onClick={() => save(editing)} className="btn-gold px-4 py-2 text-sm">Save</button>
+            <button onClick={() => setEditing(null)} className="btn-st-outline px-4 py-2 text-sm">Cancel</button>
+          </div>
+        </div>
+      )}
+      <div className="space-y-2">
+        {rows.map((r) => (
+          <div key={String(r.id)} className="glass rounded-xl p-4 flex items-center justify-between gap-4">
+            <div className="flex-1 min-w-0">
+              <p className="font-medium">{String(r.name)} <span className="text-text-muted text-xs">{String(r.handle)}</span></p>
+              <p className="text-xs text-text-muted font-mono truncate">{String(r.text).slice(0, 80)}...</p>
+            </div>
+            <div className="flex gap-2 shrink-0">
+              <button onClick={() => setEditing({
+                id: String(r.id), name: String(r.name), handle: String(r.handle),
+                text: String(r.text), avatar: String(r.avatar || ""),
+                post_url: String(r.post_url), sort_order: String(r.sort_order),
               })} className="text-xs text-gold-light hover:underline">Edit</button>
               <button onClick={() => del(String(r.id))} className="text-xs text-red-400 hover:underline">Delete</button>
             </div>
