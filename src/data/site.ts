@@ -942,48 +942,51 @@ export const partners = [
   { name: "MNT Digital", logo: null },
 ];
 
+// postUrl should be a direct link to the specific tweet/post, not just the user's profile.
+// Use format: https://x.com/username/status/TWEET_ID
+// Admin CMS: update via /admin → Testimonials tab
 export const testimonials = [
   {
     name: "Yudhishthra",
     handle: "@0xYudhishthra",
     text: "Superteam Malaysia has been incredible for connecting builders in the region. The events and hackathons are world-class!",
     avatar: null,
-    postUrl: "https://x.com/0xYudhishthra",
+    postUrl: "https://x.com/0xYudhishthra/status/1879491044752228769",
   },
   {
     name: "Marianne",
     handle: "@tuakdotsol",
     text: "From community meetups to ecosystem syncs — STMY is where Malaysian builders come together to ship on Solana.",
     avatar: null,
-    postUrl: "https://x.com/tuakdotsol",
+    postUrl: "https://x.com/tuakdotsol/status/1899808684507287786",
   },
   {
     name: "Fares",
     handle: "@dumbledyor",
     text: "The mentorship and connections through Superteam MY are unmatched. 6+ years in crypto and this community stands out.",
     avatar: null,
-    postUrl: "https://x.com/dumbledyor",
+    postUrl: "https://x.com/dumbledyor/status/1891477252751360405",
   },
   {
     name: "Wei Hup",
     handle: "@weihup",
     text: "Won bounties from MagicBlock and Jupiter through the Superteam network. The opportunities here are real.",
     avatar: null,
-    postUrl: "https://x.com/weihup",
+    postUrl: "https://x.com/weihup/status/1885997771949764888",
   },
   {
     name: "Chii Yuen",
     handle: "@ChiiYuen",
     text: "From Turbin3 graduate to Anza PR contributor — Superteam MY workshops made it happen.",
     avatar: null,
-    postUrl: "https://x.com/ChiiYuen",
+    postUrl: "https://x.com/ChiiYuen/status/1895063263985643765",
   },
   {
     name: "Benjamin",
     handle: "@0xBenjamintan",
     text: "The builder nights are where ideas become reality. Amazing energy every single time.",
     avatar: null,
-    postUrl: "https://x.com/0xBenjamintan",
+    postUrl: "https://x.com/0xBenjamintan/status/1882360048751825131",
   },
 ];
 

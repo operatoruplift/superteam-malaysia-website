@@ -530,7 +530,7 @@ function TestimonialsPanel() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Name" value={editing.name} onChange={(v) => setEditing({ ...editing, name: v })} />
             <Field label="Handle" value={editing.handle} onChange={(v) => setEditing({ ...editing, handle: v })} placeholder="@handle" />
-            <Field label="Post URL" value={editing.post_url} onChange={(v) => setEditing({ ...editing, post_url: v })} placeholder="https://x.com/..." />
+            <Field label="Tweet URL (specific post)" value={editing.post_url} onChange={(v) => setEditing({ ...editing, post_url: v })} placeholder="https://x.com/user/status/123..." />
             <Field label="Avatar URL" value={editing.avatar} onChange={(v) => setEditing({ ...editing, avatar: v })} placeholder="https://... (optional)" />
             <Field label="Sort Order" value={editing.sort_order} onChange={(v) => setEditing({ ...editing, sort_order: v })} type="number" />
           </div>

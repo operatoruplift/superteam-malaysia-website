@@ -575,9 +575,25 @@ html.light footer {
 }
 
 /* ─── X Embed — force dark background on Twitter iframe ─── */
+.tweet-embed-wrapper,
+.tweet-embed-wrapper * {
+  color-scheme: dark !important;
+}
 .tweet-embed-wrapper iframe {
   background: #000 !important;
   color-scheme: dark !important;
+}
+/* Prevent light mode from leaking into tweet embed */
+html.light .tweet-embed-wrapper,
+html.light .tweet-embed-wrapper * {
+  background-color: #000 !important;
+  color-scheme: dark !important;
+}
+html.light .tweet-embed-wrapper h3 {
+  background-color: transparent !important;
+}
+html.light .tweet-embed-wrapper p {
+  background-color: transparent !important;
 }
 
 /* Light mode: partner logo — darken so white logos are visible, keep on hover */
