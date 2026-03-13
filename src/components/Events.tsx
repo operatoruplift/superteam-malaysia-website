@@ -62,7 +62,6 @@ export default function Events() {
                           fill
                           sizes="(max-width: 768px) 100vw, 60vw"
                           className="object-cover group-hover:scale-105 transition-transform duration-500"
-                          unoptimized
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                         <div className="absolute top-3 right-3 z-10">
@@ -135,7 +134,6 @@ export default function Events() {
                           fill
                           sizes="56px"
                           className="object-cover"
-                          unoptimized
                         />
                       </div>
                       <div className="flex-1 min-w-0">
@@ -174,8 +172,8 @@ export default function Events() {
                         src={event.image}
                         alt={event.title}
                         fill
+                        sizes="40px"
                         className="object-cover"
-                        unoptimized
                       />
                     </div>
                     <div className="flex-1 min-w-0">
