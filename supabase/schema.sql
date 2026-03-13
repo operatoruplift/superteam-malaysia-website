@@ -77,10 +77,12 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS events_updated_at ON events;
 CREATE TRIGGER events_updated_at
   BEFORE UPDATE ON events
   FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 
+DROP TRIGGER IF EXISTS members_updated_at ON members;
 CREATE TRIGGER members_updated_at
   BEFORE UPDATE ON members
   FOR EACH ROW EXECUTE FUNCTION update_updated_at();
@@ -93,10 +95,15 @@ ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
 ALTER TABLE site_content ENABLE ROW LEVEL SECURITY;
 
 -- Public read access
+DROP POLICY IF EXISTS "Public read events" ON events;
 CREATE POLICY "Public read events" ON events FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Public read members" ON members;
 CREATE POLICY "Public read members" ON members FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Public read partners" ON partners;
 CREATE POLICY "Public read partners" ON partners FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Public read projects" ON projects;
 CREATE POLICY "Public read projects" ON projects FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Public read site_content" ON site_content;
 CREATE POLICY "Public read site_content" ON site_content FOR SELECT USING (true);
 
 -- Service role has full access (for admin API routes)

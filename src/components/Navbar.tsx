@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "./ThemeProvider";
 import STLogo from "./STLogo";
 
-const SCROLL_OFFSET = 125; // extra pixels to scroll past the section top
+const SCROLL_OFFSET = -125; // negative offset scrolls past the section top
 
 const navLinks = [
   { label: "Projects", href: "#projects" },

@@ -140,7 +140,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-[clamp(2.8rem,8vw,7rem)] font-extrabold tracking-[-0.03em] leading-[0.92]"
+          className="text-[clamp(2.8rem,8vw,7rem)] font-extrabold tracking-[-0.03em] leading-[1.05]"
         >
           <span className={`block ${isLight ? "text-[#1a1a2e]" : "text-white"} drop-shadow-[0_2px_20px_rgba(0,0,0,0.15)]`}>
             Building the Solana
