@@ -271,12 +271,12 @@ export function getRarity(connectionCount: number): RarityTier {
 
 export const RARITY_CONFIG: Record<
   RarityTier,
-  { label: string; stars: number; color: string; glow: string }
+  { label: string; stars: number; color: string; glow: string; emoji: string }
 > = {
-  COMMON: { label: "Common", stars: 2, color: "#56565f", glow: "transparent" },
-  UNCOMMON: { label: "Uncommon", stars: 3, color: "#2dd4bf", glow: "rgba(45,212,191,0.15)" },
-  RARE: { label: "Rare", stars: 4, color: "#6065f0", glow: "rgba(96,101,240,0.2)" },
-  MYTHIC: { label: "Mythic", stars: 5, color: "#ffc940", glow: "rgba(232,168,0,0.25)" },
+  COMMON: { label: "Common", stars: 2, color: "#56565f", glow: "transparent", emoji: "\ud83c\udf48" },
+  UNCOMMON: { label: "Uncommon", stars: 3, color: "#2dd4bf", glow: "rgba(45,212,191,0.15)", emoji: "\ud83e\udd6d" },
+  RARE: { label: "Rare", stars: 4, color: "#6065f0", glow: "rgba(96,101,240,0.2)", emoji: "\ud83e\uddc3" },
+  MYTHIC: { label: "Mythic", stars: 5, color: "#ffc940", glow: "rgba(232,168,0,0.25)", emoji: "\ud83d\udc2f" },
 };
 
 export interface Member {
@@ -337,7 +337,7 @@ export const members: Member[] = [
     name: "Marianne",
     role: "Lead",
     company: "Superteam MY",
-    skills: ["Community", "Growth", "Content"],
+    skills: ["Core Team", "Community", "Growth", "Content"],
     lane: "General Web3",
     twitter: "https://x.com/tuakdotsol",
     avatar: null,
@@ -388,7 +388,7 @@ export const members: Member[] = [
     name: "Sophia Dominique Dizon",
     role: "Core Team",
     company: "Superteam MY",
-    skills: ["Content", "Growth", "Community"],
+    skills: ["Core Team", "Content", "Growth", "Community"],
     lane: "General Web3",
     twitter: "https://x.com/nikkideyy",
     avatar: null,

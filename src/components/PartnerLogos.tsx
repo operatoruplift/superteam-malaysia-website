@@ -51,13 +51,13 @@ export default function PartnerLogos() {
                 rel="noopener noreferrer"
                 className="group flex flex-col items-center justify-center gap-2.5 px-5 sm:px-8 py-4 sm:py-6 shrink-0"
               >
-                <div className="w-14 h-14 rounded-2xl overflow-hidden bg-white/[0.05] border border-white/[0.06] flex items-center justify-center group-hover:scale-110 group-hover:bg-white/[0.08] transition-all duration-300">
+                <div className="w-12 h-12 rounded-full overflow-hidden group-hover:scale-110 transition-transform duration-300">
                   <Image
                     src={partner.logoSrc}
                     alt={partner.name}
-                    width={40}
-                    height={40}
-                    className="w-8 h-8 object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-400"
+                    width={48}
+                    height={48}
+                    className="w-12 h-12 object-cover rounded-full grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-400"
                     unoptimized
                   />
                 </div>
