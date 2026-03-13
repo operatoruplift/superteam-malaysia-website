@@ -94,23 +94,25 @@ function AutoScrollTestimonials() {
 }
 
 function XFeedEmbed() {
-  const ref = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    if (!ref.current || loaded) return;
-    const container = ref.current;
+    if (!wrapperRef.current || loaded) return;
+    const wrapper = wrapperRef.current;
+
+    // Create a standalone div for Twitter to render into — outside React's control
+    const twitterContainer = document.createElement("div");
+    wrapper.appendChild(twitterContainer);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const win = window as any;
 
     function renderTimeline() {
       if (!win.twttr?.widgets) return;
-      // Clear container before rendering
-      container.innerHTML = "";
       win.twttr.widgets.createTimeline(
         { sourceType: "profile", screenName: "SuperteamMY" },
-        container,
+        twitterContainer,
         { theme: "dark", chrome: "transparent noheader nofooter noborders", tweetLimit: 5, dnt: true }
       ).then(() => setLoaded(true));
     }
@@ -118,7 +120,6 @@ function XFeedEmbed() {
     if (win.twttr?.widgets) {
       renderTimeline();
     } else {
-      // Load script then render
       const existing = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
       if (!existing) {
         const script = document.createElement("script");
@@ -127,7 +128,6 @@ function XFeedEmbed() {
         script.charset = "utf-8";
         document.head.appendChild(script);
       }
-      // Poll for twttr to be ready
       const interval = setInterval(() => {
         if (win.twttr?.widgets) {
           clearInterval(interval);
@@ -149,17 +149,16 @@ function XFeedEmbed() {
       >
         Latest from X
       </h3>
+      {!loaded && (
+        <p style={{ color: "#71767b", fontSize: "13px", fontFamily: "monospace", padding: "0 1rem 1rem" }}>
+          Loading tweets...
+        </p>
+      )}
       <div
-        ref={ref}
+        ref={wrapperRef}
         className="tweet-embed-wrapper max-h-[400px] sm:max-h-[500px] overflow-y-auto"
         style={{ background: "#000", color: "#e7e9ea", colorScheme: "dark" }}
-      >
-        {!loaded && (
-          <p style={{ color: "#71767b", fontSize: "13px", fontFamily: "monospace", padding: "0 1rem 1rem" }}>
-            Loading tweets...
-          </p>
-        )}
-      </div>
+      />
     </div>
   );
 }

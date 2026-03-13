@@ -6,9 +6,9 @@ type Stat = { label: string; value: string };
 
 const fallbackStats: Stat[] = [
   { label: "SOL Price", value: "$183.42" },
-  { label: "Active Members", value: "312" },
-  { label: "Open Bounties", value: "RM 190K" },
-  { label: "Projects Shipped", value: "64" },
+  { label: "Active Members", value: "37" },
+  { label: "Ecosystem GDP", value: "$90K+" },
+  { label: "Projects Shipped", value: "10" },
   { label: "Solana TPS", value: "4,102" },
 ];
 

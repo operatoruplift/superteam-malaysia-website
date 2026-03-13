@@ -11,6 +11,7 @@ The official website for **Superteam Malaysia** — Malaysia's home for Solana b
 | Framework | [Next.js 16](https://nextjs.org) (App Router, Turbopack) |
 | Language | TypeScript 5 |
 | Styling | [Tailwind CSS 4](https://tailwindcss.com) |
+| Fonts | ABC Diatype + ABC Diatype Semi-Mono (self-hosted) |
 | Animation | [Framer Motion](https://www.framer.com/motion/) + custom canvas (DotGrid) |
 | Database / CMS | [Supabase](https://supabase.com) (PostgreSQL + Row Level Security) |
 | Deployment | [Vercel](https://vercel.com) |
@@ -18,6 +19,7 @@ The official website for **Superteam Malaysia** — Malaysia's home for Solana b
 
 ## Features
 
+- **Live stat ticker** bar with real-time SOL price (CoinGecko API), ecosystem GDP, member count
 - **Responsive landing page** with hero, mission, stats, events, members, global network, FAQ, projects, wall of love, and join CTA
 - **Member spotlight** with collectible card-style profiles (rarity tiers, flip animation, skill tags)
 - **Full member directory** (`/members`) with search, skill/lane/rarity filters, and sorting
@@ -41,7 +43,7 @@ The official website for **Superteam Malaysia** — Malaysia's home for Solana b
 ### Installation
 
 ```bash
-git clone https://github.com/your-repo/superteam-malaysia-website.git
+git clone https://github.com/operatoruplift/superteam-malaysia-website.git
 cd superteam-malaysia-website/sun-valley
 pnpm install
 ```
@@ -70,7 +72,7 @@ cp .env.example .env.local
 # Copy the contents of supabase/schema.sql into the SQL editor
 ```
 
-This creates tables for `events`, `members`, `partners`, `projects`, and `site_content` with:
+This creates tables for `events`, `members`, `partners`, `projects`, `announcements`, and `site_content` with:
 - Row Level Security (public read, service-role write)
 - Auto-updated timestamps
 - Performance indexes
@@ -141,9 +143,10 @@ sun-valley/
 Navigate to `/admin` and enter the admin password. The dashboard allows you to:
 
 - **Events:** Add, edit, and delete events (title, date, location, status, Luma URL, image)
-- **Members:** View all members, toggle featured status
+- **Members:** Full CRUD for member profiles with skills, achievements, and featured toggle
 - **Partners:** Manage ecosystem partner logos and URLs
 - **Projects:** Manage Malaysian project entries with categories
+- **Announcements:** Create and manage community announcements (highlight, announcement, update types)
 - **Content:** Edit key-value site content (hero text, descriptions)
 
 ## Deployment
