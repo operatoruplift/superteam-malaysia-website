@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { useTestimonials, type TestimonialData } from "@/hooks/useSupabaseData";
 import AnimatedSection from "./AnimatedSection";
 
@@ -51,66 +50,17 @@ function TestimonialCard({
 }
 
 function AutoScrollTestimonials({ testimonials }: { testimonials: TestimonialData[] }) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const animRef = useRef<number>(0);
-  const pauseTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
-
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-
-    let paused = false;
-
-    function tick() {
-      if (el && !paused) {
-        el.scrollLeft += 0.5;
-        const halfWidth = el.scrollWidth / 2;
-        if (el.scrollLeft >= halfWidth) {
-          el.scrollLeft -= halfWidth;
-        }
-      }
-      animRef.current = requestAnimationFrame(tick);
-    }
-    animRef.current = requestAnimationFrame(tick);
-
-    const pause = () => {
-      paused = true;
-      if (pauseTimer.current) clearTimeout(pauseTimer.current);
-    };
-    const resume = () => {
-      if (pauseTimer.current) clearTimeout(pauseTimer.current);
-      pauseTimer.current = setTimeout(() => { paused = false; }, 3000);
-    };
-
-    // Pause on touch/mouse interaction
-    el.addEventListener("touchstart", pause, { passive: true });
-    el.addEventListener("touchend", resume, { passive: true });
-    el.addEventListener("mouseenter", pause);
-    el.addEventListener("mouseleave", resume);
-
-    return () => {
-      cancelAnimationFrame(animRef.current);
-      if (pauseTimer.current) clearTimeout(pauseTimer.current);
-      el.removeEventListener("touchstart", pause);
-      el.removeEventListener("touchend", resume);
-      el.removeEventListener("mouseenter", pause);
-      el.removeEventListener("mouseleave", resume);
-    };
-  }, []);
-
-  // Double for seamless loop
+  // Double for seamless CSS loop (same technique as partner logos marquee)
   const doubled = [...testimonials, ...testimonials];
 
   return (
-    <div className="relative">
+    <div className="relative overflow-hidden">
+      {/* Edge fades */}
       <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-24 bg-gradient-to-r from-bg to-transparent z-10 pointer-events-none" />
       <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-24 bg-gradient-to-l from-bg to-transparent z-10 pointer-events-none" />
 
-      <div
-        ref={scrollRef}
-        className="flex gap-3 sm:gap-4 overflow-x-auto px-4 sm:px-8"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch", touchAction: "pan-x" }}
-      >
+      {/* CSS translateX animation — works on both mobile and desktop */}
+      <div className="flex gap-3 sm:gap-4 w-max animate-scroll-testimonials hover:[animation-play-state:paused] active:[animation-play-state:paused]">
         {doubled.map((t, i) => (
           <TestimonialCard key={`${t.handle}-${i}`} testimonial={t} />
         ))}
