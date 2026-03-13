@@ -53,6 +53,7 @@ function TestimonialCard({
 function AutoScrollTestimonials({ testimonials }: { testimonials: TestimonialData[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const animRef = useRef<number>(0);
+  const pauseTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -72,16 +73,28 @@ function AutoScrollTestimonials({ testimonials }: { testimonials: TestimonialDat
     }
     animRef.current = requestAnimationFrame(tick);
 
-    // Pause on touch for mobile usability
-    const pause = () => { paused = true; };
-    const resume = () => { setTimeout(() => { paused = false; }, 2000); };
+    const pause = () => {
+      paused = true;
+      if (pauseTimer.current) clearTimeout(pauseTimer.current);
+    };
+    const resume = () => {
+      if (pauseTimer.current) clearTimeout(pauseTimer.current);
+      pauseTimer.current = setTimeout(() => { paused = false; }, 3000);
+    };
+
+    // Pause on touch/mouse interaction
     el.addEventListener("touchstart", pause, { passive: true });
     el.addEventListener("touchend", resume, { passive: true });
+    el.addEventListener("mouseenter", pause);
+    el.addEventListener("mouseleave", resume);
 
     return () => {
       cancelAnimationFrame(animRef.current);
+      if (pauseTimer.current) clearTimeout(pauseTimer.current);
       el.removeEventListener("touchstart", pause);
       el.removeEventListener("touchend", resume);
+      el.removeEventListener("mouseenter", pause);
+      el.removeEventListener("mouseleave", resume);
     };
   }, []);
 
@@ -96,7 +109,7 @@ function AutoScrollTestimonials({ testimonials }: { testimonials: TestimonialDat
       <div
         ref={scrollRef}
         className="flex gap-3 sm:gap-4 overflow-x-auto px-4 sm:px-8"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch", touchAction: "pan-x" }}
       >
         {doubled.map((t, i) => (
           <TestimonialCard key={`${t.handle}-${i}`} testimonial={t} />
