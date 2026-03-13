@@ -68,7 +68,7 @@ export default function MemberCard({ member, index }: Props) {
             <span className="text-[10px] font-mono uppercase tracking-[0.15em] px-2.5 py-1 rounded-full bg-white/[0.04] text-text-muted">
               {member.lane}
             </span>
-            <span className="text-lg" title="Superteam Malaysia">🏵️</span>
+            <span className="text-lg" title={config.label}>{config.emoji}</span>
           </div>
 
           {/* Avatar */}
