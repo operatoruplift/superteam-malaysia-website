@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useTestimonials, type TestimonialData } from "@/hooks/useSupabaseData";
 import AnimatedSection from "./AnimatedSection";
 
@@ -11,14 +11,14 @@ function TestimonialCard({
 }) {
   const handle = testimonial.handle.replace("@", "");
   const profileUrl = testimonial.avatar || `https://unavatar.io/twitter/${handle}`;
-  const postUrl = testimonial.postUrl || `https://x.com/${testimonial.handle.replace("@", "")}`;
+  const postUrl = testimonial.postUrl || `https://x.com/${handle}`;
 
   return (
     <a
       href={postUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="glass rounded-2xl p-4 sm:p-5 w-[280px] sm:w-[340px] shrink-0 hover:bg-white/[0.05] transition-all duration-300 group select-none block"
+      className="glass rounded-2xl p-4 sm:p-5 w-[260px] sm:w-[340px] shrink-0 hover:bg-white/[0.05] transition-all duration-300 group select-none block"
     >
       <div className="flex items-center gap-3 mb-3.5">
         <div className="w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-gold/20 to-gold-light/10 border border-gold/10 shrink-0">
@@ -43,7 +43,7 @@ function TestimonialCard({
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
         </svg>
       </div>
-      <p className="text-[14px] text-text-secondary leading-relaxed">
+      <p className="text-[13px] sm:text-[14px] text-text-secondary leading-relaxed">
         {testimonial.text}
       </p>
     </a>
@@ -58,8 +58,10 @@ function AutoScrollTestimonials({ testimonials }: { testimonials: TestimonialDat
     const el = scrollRef.current;
     if (!el) return;
 
+    let paused = false;
+
     function tick() {
-      if (el) {
+      if (el && !paused) {
         el.scrollLeft += 0.5;
         const halfWidth = el.scrollWidth / 2;
         if (el.scrollLeft >= halfWidth) {
@@ -69,7 +71,18 @@ function AutoScrollTestimonials({ testimonials }: { testimonials: TestimonialDat
       animRef.current = requestAnimationFrame(tick);
     }
     animRef.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(animRef.current);
+
+    // Pause on touch for mobile usability
+    const pause = () => { paused = true; };
+    const resume = () => { setTimeout(() => { paused = false; }, 2000); };
+    el.addEventListener("touchstart", pause, { passive: true });
+    el.addEventListener("touchend", resume, { passive: true });
+
+    return () => {
+      cancelAnimationFrame(animRef.current);
+      el.removeEventListener("touchstart", pause);
+      el.removeEventListener("touchend", resume);
+    };
   }, []);
 
   // Double for seamless loop
@@ -77,13 +90,13 @@ function AutoScrollTestimonials({ testimonials }: { testimonials: TestimonialDat
 
   return (
     <div className="relative">
-      <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-24 bg-gradient-to-r from-bg to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-24 bg-gradient-to-l from-bg to-transparent z-10 pointer-events-none" />
+      <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-24 bg-gradient-to-r from-bg to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-24 bg-gradient-to-l from-bg to-transparent z-10 pointer-events-none" />
 
       <div
         ref={scrollRef}
-        className="flex gap-3 sm:gap-4 overflow-x-hidden px-4 sm:px-8"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        className="flex gap-3 sm:gap-4 overflow-x-auto px-4 sm:px-8"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}
       >
         {doubled.map((t, i) => (
           <TestimonialCard key={`${t.handle}-${i}`} testimonial={t} />
@@ -93,73 +106,34 @@ function AutoScrollTestimonials({ testimonials }: { testimonials: TestimonialDat
   );
 }
 
-function XFeedEmbed() {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    if (!wrapperRef.current || loaded) return;
-    const wrapper = wrapperRef.current;
-
-    // Create a standalone div for Twitter to render into — outside React's control
-    const twitterContainer = document.createElement("div");
-    wrapper.appendChild(twitterContainer);
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const win = window as any;
-
-    function renderTimeline() {
-      if (!win.twttr?.widgets) return;
-      win.twttr.widgets.createTimeline(
-        { sourceType: "profile", screenName: "SuperteamMY" },
-        twitterContainer,
-        { theme: "dark", chrome: "transparent noheader nofooter noborders", tweetLimit: 5, dnt: true }
-      ).then(() => setLoaded(true));
-    }
-
-    if (win.twttr?.widgets) {
-      renderTimeline();
-    } else {
-      const existing = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
-      if (!existing) {
-        const script = document.createElement("script");
-        script.src = "https://platform.twitter.com/widgets.js";
-        script.async = true;
-        script.charset = "utf-8";
-        document.head.appendChild(script);
-      }
-      const interval = setInterval(() => {
-        if (win.twttr?.widgets) {
-          clearInterval(interval);
-          renderTimeline();
-        }
-      }, 200);
-      return () => clearInterval(interval);
-    }
-  }, [loaded]);
-
+function XFollowCard() {
   return (
-    <div
-      className="tweet-embed-wrapper rounded-2xl overflow-hidden"
-      style={{ background: "#000", border: "1px solid rgba(255,255,255,0.06)", colorScheme: "dark" }}
+    <a
+      href="https://x.com/SuperteamMY"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="glass glass-hover rounded-2xl p-5 sm:p-8 flex items-center gap-4 sm:gap-6 group transition-all duration-300"
     >
-      <h3
-        className="text-[11px] font-mono uppercase tracking-[0.25em] px-4 pt-4 mb-3"
-        style={{ color: "#ffc940" }}
-      >
-        Latest from X
-      </h3>
-      {!loaded && (
-        <p style={{ color: "#71767b", fontSize: "13px", fontFamily: "monospace", padding: "0 1rem 1rem" }}>
-          Loading tweets...
+      <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-black flex items-center justify-center border border-white/10 shrink-0">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white" className="sm:w-6 sm:h-6">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+        </svg>
+      </div>
+      <div className="flex-1 min-w-0">
+        <p className="text-[11px] font-mono uppercase tracking-[0.25em] text-gold-light mb-1">
+          Follow us on X
         </p>
-      )}
-      <div
-        ref={wrapperRef}
-        className="tweet-embed-wrapper max-h-[400px] sm:max-h-[500px] overflow-y-auto"
-        style={{ background: "#000", color: "#e7e9ea", colorScheme: "dark" }}
-      />
-    </div>
+        <p className="text-base sm:text-xl font-bold group-hover:text-gold-light transition-colors">
+          @SuperteamMY
+        </p>
+        <p className="text-[12px] sm:text-[13px] text-text-muted mt-1">
+          Stay updated with the latest from Superteam Malaysia
+        </p>
+      </div>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-text-muted group-hover:text-gold-light group-hover:translate-x-1 transition-all shrink-0">
+        <path d="M7 17L17 7M17 7H7M17 7V17" />
+      </svg>
+    </a>
   );
 }
 
@@ -167,32 +141,32 @@ export default function WallOfLove() {
   const { data: testimonials } = useTestimonials();
 
   return (
-    <section className="relative py-28 sm:py-36 overflow-hidden">
-      <div className="section-divider mb-28 sm:mb-36" />
+    <section className="relative py-20 sm:py-28 lg:py-36 overflow-hidden">
+      <div className="section-divider mb-20 sm:mb-28 lg:mb-36" />
 
-      <div className="mx-auto max-w-7xl px-5 sm:px-8 mb-16">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 mb-12 sm:mb-16">
         <AnimatedSection className="text-center" zoom>
           <p className="text-[11px] font-mono uppercase tracking-[0.25em] text-gold-light mb-5">
             Wall of Love
           </p>
-          <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-bold tracking-tight">
+          <h2 className="text-[clamp(1.75rem,5vw,3.5rem)] font-bold tracking-tight">
             Loved by the Community
           </h2>
-          <p className="mt-4 text-text-secondary text-lg max-w-xl mx-auto">
+          <p className="mt-4 text-text-secondary text-base sm:text-lg max-w-xl mx-auto">
             Driven by creators, celebrated by builders.
           </p>
         </AnimatedSection>
       </div>
 
-      {/* Auto-scrolling testimonials (no drag) */}
-      <div className="mb-16">
+      {/* Auto-scrolling testimonials */}
+      <div className="mb-12 sm:mb-16">
         <AutoScrollTestimonials testimonials={testimonials} />
       </div>
 
-      {/* X Feed embed — always dark, independent of site theme */}
-      <div className="mx-auto max-w-3xl px-5 sm:px-8">
+      {/* X Follow card — replaces unreliable Twitter embed */}
+      <div className="mx-auto max-w-2xl px-5 sm:px-8">
         <AnimatedSection>
-          <XFeedEmbed />
+          <XFollowCard />
         </AnimatedSection>
       </div>
     </section>

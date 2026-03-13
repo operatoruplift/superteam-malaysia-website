@@ -76,7 +76,7 @@ export default function Hero() {
 
       <motion.div
         style={{ y: contentY }}
-        className="relative z-10 mx-auto max-w-6xl px-5 sm:px-8 text-center pt-28 sm:pt-32 pb-20 sm:pb-32"
+        className="relative z-10 mx-auto max-w-6xl px-4 sm:px-8 text-center pt-24 sm:pt-32 pb-16 sm:pb-32"
       >
         {/* Logo — ST Malaysia mark with glow */}
         <motion.div
@@ -140,7 +140,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-[clamp(2.8rem,8vw,7rem)] font-extrabold tracking-[-0.03em] leading-[1.05]"
+          className="text-[clamp(2.2rem,7vw,7rem)] font-extrabold tracking-[-0.03em] leading-[1.08]"
         >
           <span className={`block ${isLight ? "text-[#1a1a2e]" : "text-white"} drop-shadow-[0_2px_20px_rgba(0,0,0,0.15)]`}>
             Building the Solana
