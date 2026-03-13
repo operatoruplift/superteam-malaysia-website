@@ -9,7 +9,8 @@ function TestimonialCard({
 }: {
   testimonial: (typeof testimonials)[0];
 }) {
-  const profileUrl = `https://api.dicebear.com/9.x/notionists/svg?seed=${encodeURIComponent(testimonial.handle)}&backgroundColor=transparent`;
+  const handle = testimonial.handle.replace("@", "");
+  const profileUrl = testimonial.avatar || `https://unavatar.io/twitter/${handle}`;
   const postUrl = testimonial.postUrl || `https://x.com/${testimonial.handle.replace("@", "")}`;
 
   return (
@@ -139,7 +140,7 @@ function XFeedEmbed() {
 
   return (
     <div
-      className="rounded-2xl overflow-hidden"
+      className="tweet-embed-wrapper rounded-2xl overflow-hidden"
       style={{ background: "#000", border: "1px solid rgba(255,255,255,0.06)", colorScheme: "dark" }}
     >
       <h3
@@ -150,7 +151,7 @@ function XFeedEmbed() {
       </h3>
       <div
         ref={ref}
-        className="max-h-[400px] sm:max-h-[500px] overflow-y-auto"
+        className="tweet-embed-wrapper max-h-[400px] sm:max-h-[500px] overflow-y-auto"
         style={{ background: "#000", color: "#e7e9ea", colorScheme: "dark" }}
       >
         {!loaded && (

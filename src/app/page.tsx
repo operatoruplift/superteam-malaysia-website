@@ -14,6 +14,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Projects />
       <PartnerLogos />
       <Mission />
       <Stats />
@@ -22,7 +23,6 @@ export default function Home() {
       <GlobalNetwork />
       <WallOfLove />
       <FAQ />
-      <Projects />
       <JoinCTA />
     </>
   );

@@ -78,7 +78,7 @@ export default function MemberCard({ member, index }: Props) {
               style={{ borderColor: config.color }}
             >
               <img
-                src={member.avatar || `https://api.dicebear.com/9.x/notionists/svg?seed=${encodeURIComponent(member.name)}&backgroundColor=transparent`}
+                src={member.avatar || (member.twitter ? `https://unavatar.io/twitter/${member.twitter.replace(/^https?:\/\/(x|twitter)\.com\//, "")}` : `https://api.dicebear.com/9.x/notionists/svg?seed=${encodeURIComponent(member.name)}&backgroundColor=transparent`)}
                 alt={member.name}
                 className="w-full h-full object-cover"
               />

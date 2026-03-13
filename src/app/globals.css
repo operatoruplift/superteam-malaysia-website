@@ -574,6 +574,12 @@ html.light footer {
   border-color: rgba(0, 0, 0, 0.08);
 }
 
+/* ─── X Embed — force dark background on Twitter iframe ─── */
+.tweet-embed-wrapper iframe {
+  background: #000 !important;
+  color-scheme: dark !important;
+}
+
 /* Light mode: partner logo — darken so white logos are visible, keep on hover */
 html.light .grayscale {
   filter: grayscale(100%) brightness(0.4);
