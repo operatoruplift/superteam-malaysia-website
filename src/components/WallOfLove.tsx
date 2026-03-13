@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import { testimonials } from "@/data/site";
-import { useTheme } from "./ThemeProvider";
 import AnimatedSection from "./AnimatedSection";
 
 function TestimonialCard({
@@ -95,84 +94,70 @@ function AutoScrollTestimonials() {
 
 function XFeedEmbed() {
   const ref = useRef<HTMLDivElement>(null);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    if (!ref.current) return;
+    if (!ref.current || loaded) return;
     const container = ref.current;
-
-    // Clear and rebuild — use createTimeline API for full dark mode control
-    container.innerHTML = "";
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const win = window as any;
 
-    function createEmbed() {
-      if (win.twttr?.widgets?.createTimeline) {
-        win.twttr.widgets.createTimeline(
-          { sourceType: "profile", screenName: "SuperteamMY" },
-          container,
-          {
-            theme: "dark",
-            chrome: "noheader nofooter noborders transparent",
-            tweetLimit: 5,
-            dnt: true,
-          }
-        );
-      } else {
-        // Fallback: inject anchor tag
-        const a = document.createElement("a");
-        a.className = "twitter-timeline";
-        a.setAttribute("data-theme", "dark");
-        a.setAttribute("data-chrome", "noheader nofooter noborders transparent");
-        a.setAttribute("data-tweet-limit", "5");
-        a.href = "https://twitter.com/SuperteamMY";
-        a.textContent = "Loading tweets...";
-        a.style.color = "#94949e";
-        container.appendChild(a);
-        if (win.twttr?.widgets) {
-          win.twttr.widgets.load(container);
-        }
-      }
+    function renderTimeline() {
+      if (!win.twttr?.widgets) return;
+      // Clear container before rendering
+      container.innerHTML = "";
+      win.twttr.widgets.createTimeline(
+        { sourceType: "profile", screenName: "SuperteamMY" },
+        container,
+        { theme: "dark", chrome: "transparent noheader nofooter noborders", tweetLimit: 5, dnt: true }
+      ).then(() => setLoaded(true));
     }
 
-    const existing = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
-    if (!existing) {
-      const script = document.createElement("script");
-      script.src = "https://platform.twitter.com/widgets.js";
-      script.async = true;
-      script.charset = "utf-8";
-      script.onload = () => {
-        // Wait for twttr to be fully ready
-        if (win.twttr?.events?.bind) {
-          win.twttr.events.bind("loaded", () => createEmbed());
-        }
-        setTimeout(createEmbed, 500);
-      };
-      document.head.appendChild(script);
+    if (win.twttr?.widgets) {
+      renderTimeline();
     } else {
-      createEmbed();
+      // Load script then render
+      const existing = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
+      if (!existing) {
+        const script = document.createElement("script");
+        script.src = "https://platform.twitter.com/widgets.js";
+        script.async = true;
+        script.charset = "utf-8";
+        document.head.appendChild(script);
+      }
+      // Poll for twttr to be ready
+      const interval = setInterval(() => {
+        if (win.twttr?.widgets) {
+          clearInterval(interval);
+          renderTimeline();
+        }
+      }, 200);
+      return () => clearInterval(interval);
     }
-  }, []);
+  }, [loaded]);
 
   return (
     <div
-      className="dark rounded-2xl overflow-hidden border border-white/[0.06]"
-      style={{ background: "#15202b", colorScheme: "dark" }}
+      className="rounded-2xl overflow-hidden"
+      style={{ background: "#000", border: "1px solid rgba(255,255,255,0.06)", colorScheme: "dark" }}
     >
       <h3
-        className="text-[11px] font-mono uppercase tracking-[0.25em] px-5 pt-5 mb-4"
+        className="text-[11px] font-mono uppercase tracking-[0.25em] px-4 pt-4 mb-3"
         style={{ color: "#ffc940" }}
       >
         Latest from X
       </h3>
       <div
         ref={ref}
-        className="max-h-[380px] sm:max-h-[500px] overflow-y-auto px-4 sm:px-5 pb-4 sm:pb-5 x-embed-dark"
-        style={{ background: "#15202b", colorScheme: "dark" }}
+        className="max-h-[400px] sm:max-h-[500px] overflow-y-auto"
+        style={{ background: "#000", color: "#e7e9ea", colorScheme: "dark" }}
       >
-        <p style={{ color: "#94949e", fontSize: "13px", fontFamily: "monospace" }}>
-          Loading tweets...
-        </p>
+        {!loaded && (
+          <p style={{ color: "#71767b", fontSize: "13px", fontFamily: "monospace", padding: "0 1rem 1rem" }}>
+            Loading tweets...
+          </p>
+        )}
       </div>
     </div>
   );
@@ -202,7 +187,7 @@ export default function WallOfLove() {
         <AutoScrollTestimonials />
       </div>
 
-      {/* X Feed embed */}
+      {/* X Feed embed — always dark, independent of site theme */}
       <div className="mx-auto max-w-3xl px-5 sm:px-8">
         <AnimatedSection>
           <XFeedEmbed />

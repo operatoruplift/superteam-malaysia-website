@@ -76,7 +76,7 @@ export default function Hero() {
 
       <motion.div
         style={{ y: contentY }}
-        className="relative z-10 mx-auto max-w-6xl px-5 sm:px-8 text-center pt-20 sm:pt-24 pb-20 sm:pb-32"
+        className="relative z-10 mx-auto max-w-6xl px-5 sm:px-8 text-center pt-28 sm:pt-32 pb-20 sm:pb-32"
       >
         {/* Logo — ST Malaysia mark with glow */}
         <motion.div

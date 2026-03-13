@@ -1,22 +1,30 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ThemeProvider from "@/components/ThemeProvider";
 import ScrollProgress from "@/components/ScrollProgress";
 import PageLoader from "@/components/PageLoader";
+import StatTicker from "@/components/StatTicker";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
+const diatype = localFont({
+  src: [
+    { path: "../../public/fonts/ABCDiatype-Light.otf", weight: "300", style: "normal" },
+    { path: "../../public/fonts/ABCDiatype-Regular.otf", weight: "400", style: "normal" },
+    { path: "../../public/fonts/ABCDiatype-Medium.otf", weight: "500", style: "normal" },
+    { path: "../../public/fonts/ABCDiatype-Bold.otf", weight: "700", style: "normal" },
+  ],
+  variable: "--font-diatype",
   display: "swap",
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains",
-  subsets: ["latin"],
+const diatypeMono = localFont({
+  src: [
+    { path: "../../public/fonts/ABCDiatypeSemi-Mono-Regular.otf", weight: "400", style: "normal" },
+    { path: "../../public/fonts/ABCDiatypeSemi-Mono-Medium.otf", weight: "500", style: "normal" },
+  ],
+  variable: "--font-diatype-mono",
   display: "swap",
 });
 
@@ -119,10 +127,11 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}
+        className={`${diatype.variable} ${diatypeMono.variable} antialiased`}
       >
         <ThemeProvider>
           <PageLoader />
+          <StatTicker />
           <ScrollProgress />
           <Navbar />
           <main>{children}</main>

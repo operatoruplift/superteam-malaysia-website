@@ -106,8 +106,41 @@ CREATE POLICY "Public read projects" ON projects FOR SELECT USING (true);
 DROP POLICY IF EXISTS "Public read site_content" ON site_content;
 CREATE POLICY "Public read site_content" ON site_content FOR SELECT USING (true);
 
--- Service role has full access (for admin API routes)
--- The service role key bypasses RLS automatically
+-- ─── Announcements ───
+CREATE TABLE IF NOT EXISTS announcements (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title TEXT NOT NULL,
+  body TEXT NOT NULL DEFAULT '',
+  type TEXT NOT NULL DEFAULT 'highlight' CHECK (type IN ('highlight', 'announcement', 'update')),
+  published BOOLEAN NOT NULL DEFAULT false,
+  pinned BOOLEAN NOT NULL DEFAULT false,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+ALTER TABLE announcements ENABLE ROW LEVEL SECURITY;
+
+DROP TRIGGER IF EXISTS announcements_updated_at ON announcements;
+CREATE TRIGGER announcements_updated_at
+  BEFORE UPDATE ON announcements
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at();
+
+DROP POLICY IF EXISTS "Public read announcements" ON announcements;
+CREATE POLICY "Public read announcements" ON announcements FOR SELECT USING (true);
+
+-- ─── Write access (anon key — admin is password-gated on client) ───
+DROP POLICY IF EXISTS "Anon write events" ON events;
+CREATE POLICY "Anon write events" ON events FOR ALL USING (true) WITH CHECK (true);
+DROP POLICY IF EXISTS "Anon write members" ON members;
+CREATE POLICY "Anon write members" ON members FOR ALL USING (true) WITH CHECK (true);
+DROP POLICY IF EXISTS "Anon write partners" ON partners;
+CREATE POLICY "Anon write partners" ON partners FOR ALL USING (true) WITH CHECK (true);
+DROP POLICY IF EXISTS "Anon write projects" ON projects;
+CREATE POLICY "Anon write projects" ON projects FOR ALL USING (true) WITH CHECK (true);
+DROP POLICY IF EXISTS "Anon write site_content" ON site_content;
+CREATE POLICY "Anon write site_content" ON site_content FOR ALL USING (true) WITH CHECK (true);
+DROP POLICY IF EXISTS "Anon write announcements" ON announcements;
+CREATE POLICY "Anon write announcements" ON announcements FOR ALL USING (true) WITH CHECK (true);
 
 -- ─── Indexes ───
 CREATE INDEX IF NOT EXISTS idx_events_date ON events (date DESC);

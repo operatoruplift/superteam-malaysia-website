@@ -66,13 +66,13 @@ export default function Projects() {
                 rel="noopener noreferrer"
                 className="group glass glass-hover rounded-2xl p-5 flex flex-col items-center text-center gap-3 transition-all duration-300 hover:scale-[1.03]"
               >
-                <div className="w-14 h-14 rounded-xl overflow-hidden bg-white/[0.06] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <div className="w-14 h-14 rounded-2xl overflow-hidden bg-white/[0.06] border border-white/[0.06] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <Image
                     src={project.logo}
                     alt={project.name}
                     width={56}
                     height={56}
-                    className="w-10 h-10 object-contain"
+                    className="w-14 h-14 object-cover"
                     unoptimized
                   />
                 </div>

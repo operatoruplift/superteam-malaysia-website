@@ -7,8 +7,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "./ThemeProvider";
 import STLogo from "./STLogo";
 
-const SCROLL_OFFSET = -125; // negative offset scrolls past the section top
-
 const navLinks = [
   { label: "Projects", href: "#projects" },
   { label: "Mission", href: "#mission" },
@@ -38,7 +36,7 @@ export default function Navbar() {
     }
     const el = document.querySelector(href);
     if (el) {
-      const y = el.getBoundingClientRect().top + window.scrollY - 72 + SCROLL_OFFSET;
+      const y = el.getBoundingClientRect().top + window.scrollY - 104;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
     setMobileOpen(false);
@@ -46,7 +44,7 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-[32px] left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
           ? "glass-strong shadow-[0_1px_0_rgba(232,168,0,0.06)]"
           : "bg-transparent"
