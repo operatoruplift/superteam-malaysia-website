@@ -64,7 +64,7 @@ export default function Projects() {
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group glass glass-hover rounded-2xl p-5 flex flex-col items-center text-center gap-3 transition-all duration-300 hover:scale-[1.03]"
+                className="group tilt-card glass glass-hover rounded-2xl p-5 flex flex-col items-center text-center gap-3 transition-all duration-300"
               >
                 <div className="w-14 h-14 rounded-xl overflow-hidden bg-white/[0.06] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   <Image

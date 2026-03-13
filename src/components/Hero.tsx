@@ -1,26 +1,50 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import STLogo from "./STLogo";
 import DotGrid from "./DotGrid";
+import TextReveal from "./TextReveal";
+import MagneticButton from "./MagneticButton";
 import { useTheme } from "./ThemeProvider";
+import { useRef } from "react";
+
+const roles = ["Founders", "Developers", "Designers", "Creators", "Builders"];
 
 export default function Hero() {
   const { theme } = useTheme();
   const isLight = theme === "light";
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  // Parallax: background moves slower, foreground faster
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-15%"]);
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.8], [0, 0.6]);
 
   return (
-    <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden">
-      {/* Petronas Towers background photo */}
-      <Image
-        src="/petronas.jpg"
-        alt="Kuala Lumpur skyline"
-        fill
-        priority
-        className="object-cover object-center"
-        quality={85}
+    <section id="hero" ref={sectionRef} className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden">
+      {/* Petronas Towers background photo — parallax */}
+      <motion.div className="absolute inset-0" style={{ y: bgY }}>
+        <Image
+          src="/petronas.jpg"
+          alt="Kuala Lumpur skyline"
+          fill
+          priority
+          className="object-cover object-center scale-110"
+          quality={85}
+        />
+      </motion.div>
+
+      {/* Scroll-driven fade to black */}
+      <motion.div
+        className="absolute inset-0 bg-black"
+        style={{ opacity: overlayOpacity }}
       />
 
       {/* Dark overlays — lighter in light mode so towers are visible */}
@@ -51,7 +75,10 @@ export default function Hero() {
       {/* Bottom fade to page background */}
       <div className={`absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t ${isLight ? "from-[#fafbfc]" : "from-[#0f0f0f]"} to-transparent z-[3]`} />
 
-      <div className="relative z-10 mx-auto max-w-6xl px-5 sm:px-8 text-center pt-20 sm:pt-24 pb-20 sm:pb-32">
+      <motion.div
+        style={{ y: contentY }}
+        className="relative z-10 mx-auto max-w-6xl px-5 sm:px-8 text-center pt-20 sm:pt-24 pb-20 sm:pb-32"
+      >
         {/* Logo — ST Malaysia mark with glow */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -124,44 +151,48 @@ export default function Hero() {
           </span>
         </motion.h1>
 
-        {/* Subtitle */}
-        <motion.p
+        {/* Subtitle with typewriter */}
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.4 }}
           className={`mt-8 text-[clamp(1rem,2.5vw,1.25rem)] max-w-2xl mx-auto leading-relaxed font-light ${isLight ? "text-[#4a4a5a]" : "text-gray-300 drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)]"}`}
         >
-          Founders, developers, designers, and creators unite to build the
-          future of Web3 in Malaysia. Join the movement.
-        </motion.p>
+          <TextReveal words={roles} className="gradient-text-gold font-semibold" interval={2500} />
+          {" "}unite to build the future of Web3 in Malaysia. Join the movement.
+        </motion.div>
 
-        {/* CTAs - gold primary */}
+        {/* CTAs - magnetic gold primary */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.6 }}
           className="mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
         >
-          <a
+          <MagneticButton
+            as="a"
             href="https://t.me/SuperteamMY"
             target="_blank"
             rel="noopener noreferrer"
             className="group btn-gold inline-flex items-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 text-[14px] sm:text-[15px]"
+            strength={0.25}
           >
             Join Community
             <ArrowRight
               size={17}
               className="group-hover:translate-x-1 transition-transform duration-300"
             />
-          </a>
-          <a
+          </MagneticButton>
+          <MagneticButton
+            as="a"
             href="https://earn.superteam.fun"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-outline-gold inline-flex items-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 font-medium text-[14px] sm:text-[15px] backdrop-blur-sm"
+            strength={0.25}
           >
             Explore Opportunities
-          </a>
+          </MagneticButton>
         </motion.div>
 
         {/* Scroll hint */}
@@ -186,7 +217,7 @@ export default function Hero() {
             <div className="w-1 h-1.5 rounded-full bg-gold/60" />
           </motion.div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

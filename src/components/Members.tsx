@@ -5,12 +5,17 @@ import { ArrowRight } from "lucide-react";
 import { members } from "@/data/site";
 import AnimatedSection from "./AnimatedSection";
 import MemberCard from "./MemberCard";
+import ParticleField from "./ParticleField";
 
 export default function Members() {
   const featured = members.filter((m) => m.featured).slice(0, 9);
 
   return (
     <section id="members" className="relative py-28 sm:py-36">
+      {/* Constellation particle background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <ParticleField />
+      </div>
       <div className="section-divider mb-28 sm:mb-36" />
 
       <div className="mx-auto max-w-7xl px-5 sm:px-8">

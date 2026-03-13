@@ -51,7 +51,7 @@ export default function Mission() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {pillars.map((pillar, i) => (
             <AnimatedSection key={pillar.title} delay={i * 0.08} zoom>
-              <div className="group card-glow glass glass-hover rounded-2xl p-5 sm:p-7 h-full transition-all duration-400 hover:-translate-y-1">
+              <div className="group tilt-card card-glow glass glass-hover rounded-2xl p-5 sm:p-7 h-full transition-all duration-400 hover:-translate-y-1">
                 <div className="w-11 h-11 rounded-xl bg-gold/[0.08] border border-gold/10 flex items-center justify-center text-gold-light mb-5 group-hover:bg-gold/[0.12] group-hover:border-gold/20 transition-all duration-400">
                   {icons[pillar.icon]}
                 </div>

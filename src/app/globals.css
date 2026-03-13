@@ -619,6 +619,25 @@ html.light .glow-gold:hover {
   box-shadow: 0 0 40px rgba(232, 168, 0, 0.12), 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
+/* ─── Typewriter cursor blink ─── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.animate-blink {
+  animation: blink 0.8s step-end infinite;
+}
+
+/* ─── Tilt / 3D hover on cards ─── */
+@media (hover: hover) {
+  .tilt-card {
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .tilt-card:hover {
+    transform: perspective(800px) rotateX(2deg) rotateY(-2deg) scale(1.02);
+  }
+}
+
 /* ─── Admin CMS inputs ─── */
 .admin-input {
   width: 100%;
