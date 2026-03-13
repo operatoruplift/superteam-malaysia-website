@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import STLogo from "./STLogo";
+import KLSkylineDots from "./KLSkylineDots";
 
 const footerLinks = {
   Navigate: [
@@ -28,8 +29,15 @@ const footerLinks = {
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border bg-bg-secondary/50">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8 py-16">
+    <footer className="relative border-t border-border bg-bg-secondary/50 overflow-hidden">
+      {/* KL skyline dot grid art background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute bottom-0 left-0 right-0 h-full opacity-30">
+          <KLSkylineDots />
+        </div>
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-8 py-16">
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
           {/* Logo & description */}
           <div className="col-span-2 lg:col-span-1">

@@ -4,10 +4,10 @@ import { useEffect, useState, useRef } from "react";
 
 const sections = [
   { id: "hero", label: "Home" },
+  { id: "projects", label: "Projects" },
   { id: "mission", label: "Mission" },
   { id: "events", label: "Events" },
   { id: "members", label: "Members" },
-  { id: "projects", label: "Projects" },
 ];
 
 export default function ScrollProgress() {
