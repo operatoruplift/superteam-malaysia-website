@@ -60,6 +60,7 @@ export default function Events() {
                           src={event.image}
                           alt={event.title}
                           fill
+                          sizes="(max-width: 768px) 100vw, 60vw"
                           className="object-cover group-hover:scale-105 transition-transform duration-500"
                           unoptimized
                         />
@@ -132,6 +133,7 @@ export default function Events() {
                           src={event.image}
                           alt={event.title}
                           fill
+                          sizes="56px"
                           className="object-cover"
                           unoptimized
                         />

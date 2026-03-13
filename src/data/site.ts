@@ -942,51 +942,50 @@ export const partners = [
   { name: "MNT Digital", logo: null },
 ];
 
-// postUrl should be a direct link to the specific tweet/post, not just the user's profile.
-// Use format: https://x.com/username/status/TWEET_ID
-// Admin CMS: update via /admin → Testimonials tab
+// postUrl: link to specific tweet (x.com/user/status/ID) or user profile
+// Update via /admin → Testimonials tab with real tweet URLs when available
 export const testimonials = [
   {
     name: "Yudhishthra",
     handle: "@0xYudhishthra",
     text: "Superteam Malaysia has been incredible for connecting builders in the region. The events and hackathons are world-class!",
     avatar: null,
-    postUrl: "https://x.com/0xYudhishthra/status/1879491044752228769",
+    postUrl: "https://x.com/0xYudhishthra",
   },
   {
     name: "Marianne",
     handle: "@tuakdotsol",
     text: "From community meetups to ecosystem syncs — STMY is where Malaysian builders come together to ship on Solana.",
     avatar: null,
-    postUrl: "https://x.com/tuakdotsol/status/1899808684507287786",
+    postUrl: "https://x.com/tuakdotsol",
   },
   {
     name: "Fares",
     handle: "@dumbledyor",
     text: "The mentorship and connections through Superteam MY are unmatched. 6+ years in crypto and this community stands out.",
     avatar: null,
-    postUrl: "https://x.com/dumbledyor/status/1891477252751360405",
+    postUrl: "https://x.com/dumbledyor",
   },
   {
     name: "Wei Hup",
     handle: "@weihup",
     text: "Won bounties from MagicBlock and Jupiter through the Superteam network. The opportunities here are real.",
     avatar: null,
-    postUrl: "https://x.com/weihup/status/1885997771949764888",
+    postUrl: "https://x.com/weihup",
   },
   {
     name: "Chii Yuen",
     handle: "@ChiiYuen",
     text: "From Turbin3 graduate to Anza PR contributor — Superteam MY workshops made it happen.",
     avatar: null,
-    postUrl: "https://x.com/ChiiYuen/status/1895063263985643765",
+    postUrl: "https://x.com/ChiiYuen",
   },
   {
     name: "Benjamin",
     handle: "@0xBenjamintan",
     text: "The builder nights are where ideas become reality. Amazing energy every single time.",
     avatar: null,
-    postUrl: "https://x.com/0xBenjamintan/status/1882360048751825131",
+    postUrl: "https://x.com/0xBenjamintan",
   },
 ];
 

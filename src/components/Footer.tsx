@@ -32,7 +32,7 @@ export default function Footer() {
     <footer className="relative border-t border-border bg-bg-secondary/50 overflow-hidden">
       {/* KL skyline dot grid art background */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute bottom-0 left-0 right-0 h-full opacity-30">
+        <div className="absolute bottom-0 left-0 right-0 h-[200%] sm:h-full opacity-40 sm:opacity-30">
           <KLSkylineDots />
         </div>
       </div>
