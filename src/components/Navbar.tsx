@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "./ThemeProvider";
 import STLogo from "./STLogo";
 
-const SCROLL_OFFSET = 100; // extra pixels to scroll past the section top
+const SCROLL_OFFSET = 125; // extra pixels to scroll past the section top
 
 const navLinks = [
   { label: "Projects", href: "#projects" },
@@ -31,6 +31,11 @@ export default function Navbar() {
   const scrollToSection = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (!href.startsWith("#")) return;
     e.preventDefault();
+    // If not on homepage, navigate there first with the hash
+    if (window.location.pathname !== "/") {
+      window.location.href = `/${href}`;
+      return;
+    }
     const el = document.querySelector(href);
     if (el) {
       const y = el.getBoundingClientRect().top + window.scrollY - 72 + SCROLL_OFFSET;

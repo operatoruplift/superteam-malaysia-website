@@ -156,7 +156,7 @@ function XFeedEmbed() {
 
   return (
     <div
-      className="rounded-2xl overflow-hidden"
+      className="dark rounded-2xl overflow-hidden border border-white/[0.06]"
       style={{ background: "#15202b", colorScheme: "dark" }}
     >
       <h3
@@ -167,7 +167,7 @@ function XFeedEmbed() {
       </h3>
       <div
         ref={ref}
-        className="max-h-[380px] sm:max-h-[500px] overflow-y-auto px-4 sm:px-5 pb-4 sm:pb-5"
+        className="max-h-[380px] sm:max-h-[500px] overflow-y-auto px-4 sm:px-5 pb-4 sm:pb-5 x-embed-dark"
         style={{ background: "#15202b", colorScheme: "dark" }}
       >
         <p style={{ color: "#94949e", fontSize: "13px", fontFamily: "monospace" }}>

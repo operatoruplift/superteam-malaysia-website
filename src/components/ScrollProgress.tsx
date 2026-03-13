@@ -50,7 +50,7 @@ export default function ScrollProgress() {
   return (
     <div className="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col items-center gap-3">
       {/* Progress line */}
-      <div className="relative w-[2px] h-32 bg-white/[0.06] rounded-full overflow-hidden mb-2">
+      <div className="relative w-[2px] h-32 bg-black/[0.08] dark:bg-white/[0.06] rounded-full overflow-hidden mb-2">
         <div
           className="absolute top-0 left-0 w-full bg-gradient-to-b from-gold to-gold-light rounded-full transition-all duration-300"
           style={{ height: `${progress * 100}%` }}
@@ -72,7 +72,7 @@ export default function ScrollProgress() {
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
               i === active
                 ? "bg-gold scale-125 shadow-[0_0_8px_rgba(232,168,0,0.5)]"
-                : "bg-white/10 hover:bg-white/20"
+                : "bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20"
             }`}
           />
           <span

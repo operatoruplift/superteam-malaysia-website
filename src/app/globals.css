@@ -574,13 +574,17 @@ html.light .group:hover .grayscale {
   filter: brightness(0.85) contrast(1.1);
 }
 
-/* ─── X Embed container - always dark background ─── */
-.x-embed-container {
-  background: #15202b !important;
-  color-scheme: dark;
+/* ─── X Embed - always dark regardless of theme ─── */
+.x-embed-dark,
+.x-embed-dark * {
+  color-scheme: dark !important;
 }
-.x-embed-container iframe {
-  color-scheme: dark;
+.x-embed-dark iframe {
+  color-scheme: dark !important;
+}
+html.light .x-embed-dark {
+  background: #15202b !important;
+  color: #e7e9ea !important;
 }
 
 /* ─── Liquid glass card effect ─── */
@@ -626,16 +630,6 @@ html.light .glow-gold:hover {
 }
 .animate-blink {
   animation: blink 0.8s step-end infinite;
-}
-
-/* ─── Tilt / 3D hover on cards ─── */
-@media (hover: hover) {
-  .tilt-card {
-    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .tilt-card:hover {
-    transform: perspective(800px) rotateX(2deg) rotateY(-2deg) scale(1.02);
-  }
 }
 
 /* ─── Admin CMS inputs ─── */

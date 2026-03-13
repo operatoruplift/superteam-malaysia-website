@@ -6,7 +6,6 @@ import { ArrowRight } from "lucide-react";
 import STLogo from "./STLogo";
 import DotGrid from "./DotGrid";
 import TextReveal from "./TextReveal";
-import MagneticButton from "./MagneticButton";
 import { useTheme } from "./ThemeProvider";
 import { useRef } from "react";
 
@@ -162,37 +161,33 @@ export default function Hero() {
           {" "}unite to build the future of Web3 in Malaysia. Join the movement.
         </motion.div>
 
-        {/* CTAs - magnetic gold primary */}
+        {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.6 }}
           className="mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
         >
-          <MagneticButton
-            as="a"
+          <a
             href="https://t.me/SuperteamMY"
             target="_blank"
             rel="noopener noreferrer"
             className="group btn-gold inline-flex items-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 text-[14px] sm:text-[15px]"
-            strength={0.25}
           >
             Join Community
             <ArrowRight
               size={17}
               className="group-hover:translate-x-1 transition-transform duration-300"
             />
-          </MagneticButton>
-          <MagneticButton
-            as="a"
+          </a>
+          <a
             href="https://earn.superteam.fun"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-outline-gold inline-flex items-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 font-medium text-[14px] sm:text-[15px] backdrop-blur-sm"
-            strength={0.25}
           >
             Explore Opportunities
-          </MagneticButton>
+          </a>
         </motion.div>
 
         {/* Scroll hint */}

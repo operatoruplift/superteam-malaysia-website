@@ -4,7 +4,6 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ThemeProvider from "@/components/ThemeProvider";
-import CustomCursor from "@/components/CustomCursor";
 import ScrollProgress from "@/components/ScrollProgress";
 import PageLoader from "@/components/PageLoader";
 
@@ -124,7 +123,6 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <PageLoader />
-          <CustomCursor />
           <ScrollProgress />
           <Navbar />
           <main>{children}</main>
