@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import { usePartners } from "@/hooks/useSupabaseData";
 import AnimatedSection from "./AnimatedSection";
 
-const partners = [
+const staticPartners = [
   { name: "Solana Foundation", logoSrc: "/logos/partners/solana.png", url: "https://solana.org" },
   { name: "Jupiter", logoSrc: "/logos/partners/jupiter.png", url: "https://jup.ag" },
   { name: "Helius", logoSrc: "/logos/partners/helius.png", url: "https://helius.dev" },
@@ -16,10 +17,11 @@ const partners = [
   { name: "MNT Digital", logoSrc: "/logos/partners/mntdigital.png", url: "https://mntdigital.com" },
 ];
 
-// Double the array for seamless infinite scroll
-const doubled = [...partners, ...partners];
-
 export default function PartnerLogos() {
+  const { data: partners } = usePartners();
+  // Use Supabase data if available (has logoSrc), otherwise static
+  const resolvedPartners = partners.length > 0 && partners[0].logoSrc ? partners : staticPartners;
+  const doubled = [...resolvedPartners, ...resolvedPartners];
   return (
     <section id="ecosystem" className="relative py-28 sm:py-36">
       <div className="section-divider mb-28 sm:mb-36" />

@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { members } from "@/data/site";
+import { useMembers } from "@/hooks/useSupabaseData";
 import AnimatedSection from "./AnimatedSection";
 import MemberCard from "./MemberCard";
 
 export default function Members() {
+  const { data: members } = useMembers();
   const featured = members.filter((m) => m.featured).slice(0, 9);
 
   return (

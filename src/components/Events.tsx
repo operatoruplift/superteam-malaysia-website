@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { MapPin, CalendarDays, ExternalLink, ArrowUpRight } from "lucide-react";
-import { events } from "@/data/site";
+import { useEvents } from "@/hooks/useSupabaseData";
 import AnimatedSection from "./AnimatedSection";
 
 function formatDate(dateStr: string) {
@@ -15,6 +15,7 @@ function formatDate(dateStr: string) {
 }
 
 export default function Events() {
+  const { data: events } = useEvents();
   const upcoming = events.filter((e) => e.status === "upcoming").slice(0, 2);
   const past = events.filter((e) => e.status === "past").slice(0, 4);
 

@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { projects, ProjectCategory } from "@/data/site";
+import { type ProjectCategory } from "@/data/site";
+import { useProjects } from "@/hooks/useSupabaseData";
 import AnimatedSection from "./AnimatedSection";
 
 const categories: { label: string; value: ProjectCategory | "All" }[] = [
@@ -15,6 +16,7 @@ const categories: { label: string; value: ProjectCategory | "All" }[] = [
 
 export default function Projects() {
   const [active, setActive] = useState<ProjectCategory | "All">("All");
+  const { data: projects } = useProjects();
 
   const filtered =
     active === "All"

@@ -142,6 +142,24 @@ CREATE POLICY "Anon write site_content" ON site_content FOR ALL USING (true) WIT
 DROP POLICY IF EXISTS "Anon write announcements" ON announcements;
 CREATE POLICY "Anon write announcements" ON announcements FOR ALL USING (true) WITH CHECK (true);
 
+-- ─── Testimonials (Wall of Love) ───
+CREATE TABLE IF NOT EXISTS testimonials (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  handle TEXT NOT NULL,
+  text TEXT NOT NULL DEFAULT '',
+  avatar TEXT,
+  post_url TEXT NOT NULL DEFAULT '',
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+ALTER TABLE testimonials ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Public read testimonials" ON testimonials;
+CREATE POLICY "Public read testimonials" ON testimonials FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Anon write testimonials" ON testimonials;
+CREATE POLICY "Anon write testimonials" ON testimonials FOR ALL USING (true) WITH CHECK (true);
+
 -- ─── Indexes ───
 CREATE INDEX IF NOT EXISTS idx_events_date ON events (date DESC);
 CREATE INDEX IF NOT EXISTS idx_events_status ON events (status);
@@ -149,3 +167,4 @@ CREATE INDEX IF NOT EXISTS idx_members_featured ON members (featured) WHERE feat
 CREATE INDEX IF NOT EXISTS idx_partners_sort ON partners (sort_order);
 CREATE INDEX IF NOT EXISTS idx_projects_category ON projects (category);
 CREATE INDEX IF NOT EXISTS idx_site_content_key ON site_content (key);
+CREATE INDEX IF NOT EXISTS idx_testimonials_sort ON testimonials (sort_order);
