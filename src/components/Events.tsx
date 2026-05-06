@@ -20,7 +20,7 @@ export default function Events() {
   const past = events.filter((e) => e.status === "past").slice(0, 4);
 
   return (
-    <section id="events" className="relative py-28 sm:py-36">
+    <section id="events" className="relative py-28 sm:py-36 overflow-hidden">
       <div className="section-divider mb-28 sm:mb-36" />
 
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
