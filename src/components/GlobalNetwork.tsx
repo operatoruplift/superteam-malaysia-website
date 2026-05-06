@@ -123,7 +123,7 @@ function WorldMapDots() {
 
 export default function GlobalNetwork() {
   return (
-    <section className="relative py-28 sm:py-36">
+    <section className="relative py-28 sm:py-36 overflow-hidden">
       <div className="section-divider mb-28 sm:mb-36" />
 
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
