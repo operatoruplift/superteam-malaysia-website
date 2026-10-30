@@ -2,6 +2,12 @@
   "name": "superteam-malaysia-website",
   "version": "0.1.0",
   "private": true,
+  "description": "A community website for Superteam Malaysia, built for the Superteam Malaysia Website Competition.",
+  "homepage": "https://superteammalaysia.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/operatoruplift/superteam-malaysia-website.git"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
