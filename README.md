@@ -135,6 +135,7 @@ cp .env.example .env.local
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key, used for the public reads and by `/admin` |
 | `SUPABASE_SERVICE_ROLE_KEY` | Read only by `createAdminClient()` in `src/lib/supabase.ts`, which no page calls yet. Server-side only: never prefix it with `NEXT_PUBLIC_` |
 | `NEXT_PUBLIC_SITE_URL` | Base URL for metadata and social images; defaults to `https://sun-valley-rouge.vercel.app` |
+| `ADMIN_PASSWORD` | The `/admin` sign-in password, checked on the server by `/api/admin/login` (added in https://github.com/operatoruplift/superteam-malaysia-website/pull/14). Without it `/admin` stays locked. Server-side only: never prefix it with `NEXT_PUBLIC_` |
 
 On Vercel, add the same variables under **Settings → Environment Variables** and redeploy, or deploy from the CLI with `vercel deploy --prod`.
 
