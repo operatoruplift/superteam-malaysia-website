@@ -1,5 +1,6 @@
 {
   "name": "superteam-malaysia-website",
+  "license": "MIT",
   "version": "0.1.0",
   "private": true,
   "description": "A community website for Superteam Malaysia, built for the Superteam Malaysia Website Competition.",

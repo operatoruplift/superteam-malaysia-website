@@ -15,6 +15,7 @@
 <img src="https://img.shields.io/badge/Next.js-16.1-E8A800?style=flat-square&logo=nextdotjs&logoColor=white&labelColor=0F0F0F" alt="Next.js 16.1">
 <img src="https://img.shields.io/badge/Tailwind_CSS-4-38BDF8?style=flat-square&logo=tailwindcss&logoColor=white&labelColor=0F0F0F" alt="Tailwind CSS 4">
 <img src="https://img.shields.io/badge/CMS-Supabase,_optional-3ECF8E?style=flat-square&logo=supabase&logoColor=white&labelColor=0F0F0F" alt="CMS: Supabase, optional">
+<a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-6F6163?style=flat-square&labelColor=0F0F0F" alt="License: MIT"></a>
 
 <h3>Malaysia's Solana builders, projects and events, on one page.</h3>
 
@@ -179,6 +180,6 @@ The dashboard writes with the anon key from the browser, so `supabase/schema.sql
 
 <br>
 
-<p align="center"><sub>Built for the Superteam Malaysia Website Competition. This repository has no license file. Superteam, partner and project names and logos belong to their owners.</sub></p>
+<p align="center"><sub>Built for the Superteam Malaysia Website Competition. The code is MIT licensed (see <a href="LICENSE">LICENSE</a>); the commercially licensed ABC Diatype font files in <code>public/fonts</code> are not covered. Superteam, partner and project names and logos belong to their owners.</sub></p>
 
 <p align="center"><sub>Built by <a href="https://rvaclassic.xyz">Matt Sim</a>, founder of <a href="https://operatoruplift.com">Operator Uplift</a>. More builds at <a href="https://github.com/operatoruplift">github.com/operatoruplift</a>. Want one built for your product? <a href="https://cal.com/rvaclassic/15min">Book a 15-minute call</a>.</sub></p>
