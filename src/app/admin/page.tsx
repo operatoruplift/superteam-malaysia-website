@@ -48,12 +48,22 @@ export default function AdminDashboard() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = () => {
-    if (password === "superteam-my-admin-2024") {
-      setAuthenticated(true);
-      setError("");
-    } else {
-      setError("Invalid password");
+  const handleLogin = async () => {
+    try {
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.ok) {
+        setAuthenticated(true);
+        setError("");
+      } else {
+        setError(data.error || "Invalid password");
+      }
+    } catch {
+      setError("Could not reach the server");
     }
   };
 
